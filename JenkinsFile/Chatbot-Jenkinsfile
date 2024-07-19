@@ -49,15 +49,15 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build -t chatbot ."
-                       sh "docker tag chatbot kvthinks/chatbot:latest "
-                       sh "docker push kvthinks/chatbot:latest "
+                       sh "docker tag chatbot kvthinks363/chatbot:latest "
+                       sh "docker push kvthinks363/chatbot:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image kvthinks/chatbot:latest > trivy.json" 
+                sh "trivy image kvthinks363/chatbot:latest > trivy.json" 
             }
         }
         stage ("Remove container") {
@@ -68,7 +68,7 @@ pipeline{
         }
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name chatbot -p 3000:3000 kvthinks/chatbot:latest'
+                sh 'docker run -d --name chatbot -p 3000:3000 kvthinks363/chatbot:latest'
             }
         }
         stage('Deploy to kubernetes'){
